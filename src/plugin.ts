@@ -37,7 +37,7 @@ export type RenderChunk = (
   | void
 >
 
-export type BuildStart = (this: PluginContext) => MaybePromise<void>
+export type BuildStart = () => MaybePromise<void>
 export type BuildEnd = (
   this: PluginContext,
   ctx: { writtenFiles: WrittenFile[] }
@@ -104,7 +104,7 @@ export class PluginContainer {
   async buildStarted() {
     for (const plugin of this.plugins) {
       if (plugin.buildStart) {
-        await plugin.buildStart.call(this.getContext())
+        await plugin.buildStart()
       }
     }
   }
